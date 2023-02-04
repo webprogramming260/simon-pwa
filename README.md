@@ -1,2 +1,3 @@
 # simon-pwa
-Simon mobile version using Progressive Web Application
+
+This deliverable demonstrates using Progressive Web Application functionality.
