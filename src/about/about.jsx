@@ -8,8 +8,8 @@ export class About extends React.Component {
 
     this.state = {
       imageUrl: '',
-      quote: 'loading...',
-      quoteAuthor: 'unknown',
+      quote: '',
+      quoteAuthor: '',
     };
 
     const random = Math.floor(Math.random() * 1000);
@@ -23,14 +23,22 @@ export class About extends React.Component {
         const imageUrl = `https://picsum.photos/id/${data[0].id}/${width}/${height}?grayscale`;
         this.setState({ imageUrl: imageUrl });
       })
-      .catch();
+      .catch(() => {
+        // Use offline fallback and don't display an image
+      });
 
     fetch('https://api.quotable.io/random')
       .then((response) => response.json())
       .then((data) => {
         this.setState({ quote: data.content, quoteAuthor: data.author });
       })
-      .catch();
+      .catch(() => {
+        // Use offline fallback classic quote
+        this.setState({
+          quote: `Always bet on JavaScript`,
+          quoteAuthor: `Brendan Eich`,
+        });
+      });
   }
 
   render() {
@@ -59,7 +67,7 @@ export class About extends React.Component {
 
           <div className='quote-box bg-light text-dark'>
             <p className='quote'>{this.state.quote}</p>
-            <p className='author'>{this.state.quoteAuthor}</p>
+            {this.state.quoteAuthor && <p className='author'>{this.state.quoteAuthor}</p>}
           </div>
         </div>
       </main>
