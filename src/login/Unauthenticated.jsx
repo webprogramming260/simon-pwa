@@ -18,19 +18,25 @@ export function Unauthenticated(props) {
   }
 
   async function loginOrCreate(endpoint) {
-    const response = await fetch(endpoint, {
-      method: 'post',
-      body: JSON.stringify({ email: userName, password: password }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    });
-    if (response?.status === 200) {
-      localStorage.setItem('userName', userName);
-      props.onLogin(userName);
-    } else {
-      const body = await response.json();
-      setDisplayError(`⚠ Error: ${body.msg}`);
+    try {
+      const response = await fetch(endpoint, {
+        method: 'post',
+        body: JSON.stringify({ email: userName, password: password }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      });
+      if (response?.status === 200) {
+        localStorage.setItem('userName', userName);
+        props.onLogin(userName);
+      } else {
+        const body = await response.json();
+        setDisplayError(`⚠ Error: ${body.msg}`);
+      }
+    } catch {
+      setDisplayError(
+        `⚠ It appears that you are currently offline. You can play Simon offline, but you must be initially online to create or login to your account.`
+      );
     }
   }
 
@@ -64,10 +70,7 @@ export function Unauthenticated(props) {
         </Button>
       </div>
 
-      <MessageDialog
-        message={displayError}
-        onHide={() => setDisplayError(null)}
-      />
+      <MessageDialog message={displayError} onHide={() => setDisplayError(null)} />
     </>
   );
 }
