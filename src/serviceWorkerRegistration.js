@@ -1,13 +1,5 @@
 // To learn more about service worker registration read https://cra.link/PWA
 
-const isLocalhost = Boolean(
-  window.location.hostname === 'localhost' ||
-    // [::1] is the IPv6 localhost address.
-    window.location.hostname === '[::1]' ||
-    // 127.0.0.0/8 are considered localhost for IPv4.
-    window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
-);
-
 export function register(config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
@@ -39,6 +31,18 @@ export function register(config) {
         registerValidSW(swUrl, config);
       }
     });
+  }
+}
+
+export function unregister() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready
+      .then((registration) => {
+        registration.unregister();
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
   }
 }
 
@@ -111,14 +115,10 @@ function checkValidServiceWorker(swUrl, config) {
     });
 }
 
-export function unregister() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready
-      .then((registration) => {
-        registration.unregister();
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  }
-}
+const isLocalhost = Boolean(
+  window.location.hostname === 'localhost' ||
+    // [::1] is the IPv6 localhost address.
+    window.location.hostname === '[::1]' ||
+    // 127.0.0.0/8 are considered localhost for IPv4.
+    window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+);
