@@ -22,7 +22,7 @@ rm -rf dist
 mkdir dist
 cp -rf build dist/public
 cp service/*.js dist
-cp service/package* dist
+cp service/*.json dist
 
 # Step 2
 printf "\n----> Clearing out previous distribution on the target\n"
