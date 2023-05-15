@@ -1,13 +1,12 @@
 import React from 'react';
-import { useState } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import { MessageDialog } from './messageDialog';
 
 export function Unauthenticated(props) {
-  const [userName, setUserName] = useState(props.userName);
-  const [password, setPassword] = useState('');
-  const [displayError, setDisplayError] = React.useState(null);
+  const [userName, setUserName] = React.useState(props.userName);
+  const [password, setPassword] = React.useState('');
+  const [displayError, setDisplayError] = React.React.useState(null);
 
   async function loginUser() {
     loginOrCreate(`/api/auth/login`);
