@@ -1,0 +1,188 @@
+openapi: '3.0.0'
+info:
+  description: Simon game play endpoints.
+  version: 2023.01.11
+  title: Simon
+tags:
+  - name: auth
+    description: Authorization
+  - name: user
+    description: Game play users
+  - name: score
+    description: Scores for users
+paths:
+  '/api/auth/create':
+    post:
+      tags:
+        - auth
+      summary: create authentication
+      description: Authenticate a user based upon the provided credentials.
+      operationId: createAuth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  description: The user's email address
+                  type: string
+                password:
+                  description: The user's password
+                  type: string
+      responses:
+        '200':
+          description: successful operation.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: The user's unique ID
+                    type: string
+        '409':
+          description: Existing user
+  '/api/auth/login':
+    post:
+      tags:
+        - auth
+      summary: Initiate authentication
+      description: Authenticate a user based upon the provided credentials.
+      operationId: getAuth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  description: The user's email address
+                  type: string
+                password:
+                  description: The user's password
+                  type: string
+      responses:
+        '200':
+          description: successful operation.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: The user's unique ID
+                    type: string
+        '404':
+          description: Unknown email or password supplied
+  '/api/auth':
+    delete:
+      tags:
+        - auth
+      summary: Delete authentication
+      description: Logs the user out of the current device.
+      operationId: deleteAuth
+      responses:
+        '204':
+          description: successful operation.
+  '/api/user/{email}':
+    get:
+      tags:
+        - user
+      summary: Get the requested user
+      description: Returns information about the requested user
+      operationId: getUser
+      parameters:
+        - name: email
+          in: path
+          description: The user's email
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    email:
+                      description: The user's email
+                      type: string
+                    authenticated:
+                      description: Indicates that the user has been authenticated on this device
+                      type: boolean
+        '404':
+          description: Unknown user requested
+  '/api/score':
+    get:
+      tags:
+        - score
+      summary: Get the current high scores
+      description: Get the current top 10 high scores for all users.
+      operationId: getScores
+      responses:
+        '200':
+          description: successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      description: The user's name
+                      type: string
+                    score:
+                      description: The game score
+                      type: number
+                    date:
+                      description: The date the score was obtained
+                      type: string
+    post:
+      tags:
+        - score
+      summary: Submit a new score
+      description: Submit a new score for consideration in the high scores.
+      operationId: submitScore
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: The user's name
+                  type: string
+                score:
+                  description: The game score
+                  type: number
+                date:
+                  description: The date the score was obtained
+                  type: string
+      responses:
+        '200':
+          description: successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      description: The user's name
+                      type: string
+                    score:
+                      description: The game score
+                      type: number
+                    date:
+                      description: The date the score was obtained
+                      type: string
