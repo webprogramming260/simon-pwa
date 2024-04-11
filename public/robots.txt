@@ -7,4 +7,4 @@ Allow: /
 User-agent: hackerbot
 Disallow: /
 
-Sitemap: https://www.example.com/sitemap.xml
+Sitemap: https://simon.sitemap.xml
