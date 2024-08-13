@@ -6,7 +6,7 @@ import { MessageDialog } from './messageDialog';
 export function Unauthenticated(props) {
   const [userName, setUserName] = React.useState(props.userName);
   const [password, setPassword] = React.useState('');
-  const [displayError, setDisplayError] = React.React.useState(null);
+  const [displayError, setDisplayError] = React.useState(null);
 
   async function loginUser() {
     loginOrCreate(`/api/auth/login`);
@@ -33,9 +33,7 @@ export function Unauthenticated(props) {
         setDisplayError(`⚠ Error: ${body.msg}`);
       }
     } catch {
-      setDisplayError(
-        `⚠ It appears that you are currently offline. You can play Simon offline, but you must be initially online to create or login to your account.`
-      );
+      setDisplayError(`⚠ It appears that you are currently offline. You can play Simon offline, but you must be initially online to create or login to your account.`);
     }
   }
 
@@ -44,22 +42,11 @@ export function Unauthenticated(props) {
       <div>
         <div className='input-group mb-3'>
           <span className='input-group-text'>@</span>
-          <input
-            className='form-control'
-            type='text'
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            placeholder='your@email.com'
-          />
+          <input className='form-control' type='text' value={userName} onChange={(e) => setUserName(e.target.value)} placeholder='your@email.com' />
         </div>
         <div className='input-group mb-3'>
           <span className='input-group-text'>🔒</span>
-          <input
-            className='form-control'
-            type='password'
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder='password'
-          />
+          <input className='form-control' type='password' onChange={(e) => setPassword(e.target.value)} placeholder='password' />
         </div>
         <Button variant='primary' onClick={() => loginUser()}>
           Login
