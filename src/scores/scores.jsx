@@ -29,7 +29,7 @@ export function Scores() {
       scoreRows.push(
         <tr key={i}>
           <td>{i}</td>
-          <td>{score.name.split!==undefined ? score.name.split('@')[0] : score.name}</td>
+          <td>{typeof score.name.split === "string" ? score.name.split('@')[0] : score.name}</td>
           <td>{score.score}</td>
           <td>{score.date}</td>
         </tr>
